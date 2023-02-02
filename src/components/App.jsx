@@ -1,16 +1,64 @@
+import HomePage from './HomePage/HomePage';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
+import { getSid } from 'Redux/kapustaSlice';
+import { Registration } from './Registration/Registration';
+import { Navigate } from 'react-router-dom';
+import { Layout } from './Layout/Layout';
+import AppBarReport from './Report/AppBarReport/AppBarReport';
+import Expense from 'pages/Report/Expenses/Expenses';
+import Income from 'pages/Report/Income/Income';
+import ExpensesPage from './ExpensesPage/ExpensesPage';
+import IncomePage from './IncomePage/IncomePage';
+import { useEffect } from 'react';
+import { refresh } from 'Redux/authOperaions';
 export const App = () => {
+  const token = useSelector(getSid);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refresh());
+  }, [dispatch]);
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Routes>
+      <Route path="/home" element={<Layout />}>
+        <Route
+          index
+          element={
+            !token ? <HomePage /> : <Navigate to={'/home/expenses'} replace />
+          }
+        />
+        <Route
+          path="register"
+          element={
+            !token ? (
+              <Registration />
+            ) : (
+              <Navigate to={'/home/expenses'} replace />
+            )
+          }
+        />
+        <Route
+          path="expenses"
+          element={token ? <ExpensesPage /> : <Navigate to={'/home'} />}
+        />
+        <Route
+          path="income"
+          element={token ? <IncomePage /> : <Navigate to={'/home'} />}
+        />
+        <Route
+          path="reports"
+          element={token ? <AppBarReport /> : <Navigate to={'/home'} />}
+        >
+          <Route index element={<Expense />} />
+          <Route
+            path="income"
+            element={token ? <Income /> : <Navigate to={'/home'} />}
+          />
+        </Route>
+      </Route>
+      <Route path="*" element={<Navigate to={'/home'} />} />
+    </Routes>
   );
 };

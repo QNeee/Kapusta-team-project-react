@@ -18,7 +18,7 @@ import {
   ReportExpenseListItemText,
   ReportExpenseListWrapper,
 } from '../Report.styled';
-
+import { useEffect } from 'react';
 export default function Income() {
   const navigate = useNavigate();
   const userPeriodTotal = useSelector(getDataByPeriod);
@@ -39,10 +39,26 @@ export default function Income() {
 
   const TotalIncomesArray = userPeriodDataTotalIncomes.map(item => item);
   const onClickIcon = e => {
+    const ul = document.getElementById('iconsUl');
+    const div = ul.querySelector('div');
+    div.firstChild.classList.remove('icons');
+    div.firstChild.classList.add('item-icon');
+    div.firstChild.classList.add('css-1cedacj');
     if (e.target.nodeName !== 'svg' && e.target.nodeName !== 'path') return;
     const dataToSet = userPeriodTotal.map(item => item);
     dispatch(setIconData({ id: e.target.id, data: dataToSet }));
   };
+  useEffect(() => {
+    const dataToSet = userPeriodTotal.map(item => item);
+    const ul = document.getElementById('iconsUl');
+    if (ul !== null) {
+      const div = ul.querySelector('div');
+      div.firstChild.classList.remove('item-icon');
+      div.firstChild.classList.remove('css-1cedacj')
+      div.firstChild.classList.add('icons');
+      dispatch(setIconData({ id: ul.firstChild.id, data: dataToSet }));
+    }
+  }, [userPeriodTotal, dispatch])
   return (
     <>
       <ReportExpenseListWrapper>
@@ -63,10 +79,10 @@ export default function Income() {
           </ReportExpenseButtonArrowRight>
         </ReportExpenseWrapper>
         {TotalIncomesArray.length > 0 && TotalIncomesArray[0].length > 0 ? (
-          <ReportExpenseList onClick={onClickIcon}>
+          <ReportExpenseList id='iconsUl' onClick={onClickIcon}>
             {TotalIncomesArray.map(item =>
               item.map(elem => (
-                <ReportExpenseListItem key={elem[0]}>
+                <ReportExpenseListItem id={elem[0]} key={elem[0]}>
                   <ReportExpenseListItemAmount>
                     {elem[1].total}.00
                   </ReportExpenseListItemAmount>

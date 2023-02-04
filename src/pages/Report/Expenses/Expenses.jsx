@@ -50,10 +50,13 @@ export default function Expense() {
   const TotalExpensesArray = userPeriodDataTotalExpenses.map(item => item);
   const onClickIcon = e => {
     const ul = document.getElementById('iconsUl');
-    const div = ul.querySelector('div');
-    div.firstChild.classList.remove('icons');
-    div.firstChild.classList.add('item-icon');
-    div.firstChild.classList.add('css-1cedacj');
+    const firstDiv = ul.querySelector('div');
+    if (firstDiv.className === 'css-1wtqgpv test' && firstDiv !== null) {
+      firstDiv.classList.remove('test');
+      firstDiv.firstChild.classList.add('item-icon');
+      firstDiv.firstChild.classList.add('css-1cedacj')
+      firstDiv.firstChild.classList.remove('icons');
+    }
     if (e.target.nodeName !== 'svg' && e.target.nodeName !== 'path') return;
     const dataToSet = userPeriodTotal.map(item => item);
     dispatch(setIconData({ id: e.target.id, data: dataToSet }));
@@ -66,6 +69,7 @@ export default function Expense() {
       div.firstChild.classList.remove('item-icon');
       div.firstChild.classList.remove('css-1cedacj')
       div.firstChild.classList.add('icons');
+      div.classList.add('test');
       dispatch(setIconData({ id: ul.firstChild.id, data: dataToSet }));
     }
   }, [userPeriodTotal, dispatch])

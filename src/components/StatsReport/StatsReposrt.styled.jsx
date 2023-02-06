@@ -22,3 +22,5 @@ export const StatsWrapper = styled.div`
     padding: 22px 138px 22px 138px;
   }
 `;
+
+//ss

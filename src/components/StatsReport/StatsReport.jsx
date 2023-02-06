@@ -15,6 +15,7 @@ import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getIconsData } from "Redux/kapustaSlice";
+import { CloseSvg } from "components/ModalWindowNav/ModalWindowNav.styled";
 const StatsReport = () => {
   const iconData = useSelector(getIconsData)
   let newObj = {};
@@ -39,7 +40,7 @@ const StatsReport = () => {
   const isTabScreen = useMediaQuery({ query: '(min-width: 768px)' });
   const isBeforeDescScreen = useMediaQuery({ query: '(max-width: 1279.98px)' });
   const isAfterDescScreen = useMediaQuery({ query: '(min-width: 1280px)' });
-
+  
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -55,6 +56,7 @@ const StatsReport = () => {
 
   const sortableObj = Object.fromEntries(
     Object.entries(normalObj).sort(([, a], [, b]) => b - a)
+
   );
 
   const arr = Object.values(sortableObj);
@@ -148,7 +150,6 @@ const StatsReport = () => {
     options.plugins.datalabels.font.size = 10;
     options.plugins.datalabels.align = 'top';
     options.plugins.datalabels.anchor = 'end';
-
     options.scales.y.ticks.mirror = true;
     options.scales.y.ticks.labelOffset = -17;
   }

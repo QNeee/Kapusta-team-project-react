@@ -55,7 +55,8 @@ const StatsReport = () => {
   delete normalObj.total;
 
   const sortableObj = Object.fromEntries(
-    Object.entries(normalObj).sort(([,a],[,b]) => b-a)
+    Object.entries(normalObj).sort(([, a], [, b]) => b - a)
+
   );
 
   const arr = Object.values(sortableObj);
@@ -80,7 +81,7 @@ const StatsReport = () => {
     responsive: true,
     scales: {
       x: {
-         border: {
+        border: {
           display: false,
         },
         grid: {
@@ -126,7 +127,7 @@ const StatsReport = () => {
         clamp: true,
         align: "top",
         formatter: function (value, context) {
-          return value + 'UAH';
+          return '' + value + ' UAH';
         },
       }
     },
@@ -149,7 +150,6 @@ const StatsReport = () => {
     options.plugins.datalabels.font.size = 10;
     options.plugins.datalabels.align = 'top';
     options.plugins.datalabels.anchor = 'end';
-    
     options.scales.y.ticks.mirror = true;
     options.scales.y.ticks.labelOffset = -17;
   }

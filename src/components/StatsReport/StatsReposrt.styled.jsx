@@ -7,7 +7,6 @@ export const StatsWrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0;
-
   @media screen and (min-width: 768px) {
     width: 704px;
     display: flex;
@@ -18,7 +17,6 @@ export const StatsWrapper = styled.div`
     border: solid 1px transparent;
     border-radius: 30px;
   }
-
   @media screen and (min-width: 1280px) {
     width: 1034px;
     padding: 22px 138px 22px 138px;
